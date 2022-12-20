@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>KNU Book Trade</title>
+    <style>
+        body {background-image: url("../image/knu2.jpg"); background-size:cover; background-attachment:fixed;}
+        h1 {color:blue; font: 25pt "맑은 고딕"; text-align: center;}
+        button {text-align: center; margin: 3px; padding: 3px; }
+        #center {background-color: #BDBDBD; background-color: rgba(255, 255, 255, 0.5);
+         border: 1px solid black; margin:3px; text-align: center; float: left; width: 99%;}
+        #main {background-color: #BDBDBD; background-color: rgba(255, 255, 255, 0.5);
+        border: 1px solid black; margin:3px; padding: 3px; text-align: center; float: left; width: 65%; }
+        #side {background-color: #BDBDBD; background-color: rgba(255, 255, 255, 0.5);
+        border: 1px solid black; margin:3px; padding: 3px; text-align: center; float:right; width: 30%}
+        #sname {display: inline-block;}
+        #table {margin:5px; padding:5px; background-color: #BDBDBD;}
+
+    </style>
+</head>
+<body>
+<h1><strong>강원대학교 중고 도서 거래</strong></h1>
+<div id="sname" th:text="${member.name}"></div>님 환영합니다!
+<button type="button" onclick="location.href='/member/out'">로그아웃</button>
+<button type="button" onclick="location.href='/member/myPage'">마이페이지</button>
+<div class="container" id="cont">
+    <div id="center">
+        <form action="/books/search" method="post">
+            <div class="form-group">
+                <label for="name">제목</label>
+                    <input type="text" id="name" name="name" placeholder="제목을 입력하세요">
+
+                <label for="publisher">저자</label>
+                    <input type="text" id="publisher" name="publisher" placeholder="저자명을 입력하세요">
+
+                <label for="price">가격</label>
+                    <input type="text" id="price" name="price" placeholder="희망 가격을 입력하세요">
+
+            </div>
+            <button type="submit">검색</button>
+            <button type="reset">취소</button>
+        </form>
+    </div>
+    <div id="main">
+        <table id="table" border="1" width="98%" height="200" bordercolor="black">
+            <thead>
+            <tr>
+                목록
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>등록번호</td>
+                <td>도서명</td>
+                <td>저자</td>
+                <td>가격</td>
+                <td>소유주</td>
+            </tr>
+            <tr th:each="book : ${books}">
+                <td th:text="${book.id}"></td>
+                <td th:text="${book.name}"></td>
+                <td th:text="${book.publisher}"></td>
+                <td th:text="${book.price}"></td>
+                <td th:text="${book.owner}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="side">
+        <form action="/books/order" method="post">
+            <p>주문서 작성</p>
+            <div class="form-group">
+                <label for="bookid">도서 번호</label>
+                <input type="text" id="bookid" name="bookid" placeholder="도서 번호를 입력하세요" required>
+            </div>
+            <button type="submit">주문</button>
+            <button type="reset">취소</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

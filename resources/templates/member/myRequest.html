@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지</title>
+    <style>
+        body {background-image: url("../image/knu2.jpg"); background-size:cover; background-attachment:fixed;}
+        h1 {color:blue; font: 25pt "맑은 고딕"; text-align: center;}
+        table {background-color: #BDBDBD; text-align: center; margin: 3px;}
+        #sname {display: inline-block;}
+    </style>
+</head>
+<body>
+<h1><a href="/books/main"><strong>강원대학교 중고 도서 거래</strong></a></h1>
+<div id="sname" th:text="${member.name}"></div>님 환영합니다!
+<button type="button" onclick="location.href='/member/out'">로그아웃</button>
+<button type="button" onclick="location.href='/member/myPage'">내 도서 목록</button>
+<button type="button" onclick="location.href='/member/myOrdersTo'">받은 주문 보기</button>
+<div class="container">
+    </table>
+    <table border="1" width="70%" height="200" bordercolor="black">
+        <thead>
+        <tr>
+            <th>주문 목록</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>주문번호</td>
+            <td>도서명</td>
+            <td>소유주</td>
+            <td>주문자</td>
+        </tr>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.orderid}"></td>
+            <td th:text="${order.bookname}"></td>
+            <td th:text="${order.owner}"></td>
+            <td th:text="${order.client}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div><!--/container-->
+</body>
+</html>
