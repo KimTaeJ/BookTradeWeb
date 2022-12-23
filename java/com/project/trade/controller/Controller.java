@@ -38,13 +38,15 @@ public class Controller {
     @GetMapping(value="/books/main")
     public String mainPage(Model model, HttpServletRequest serv, RedirectAttributes redi) {
         HttpSession session = serv.getSession();
+        List<Book> books = bookService.findBooks();
+        model.addAttribute("books", books);
         model.addAttribute("member", session.getAttribute("member"));
         return "books/searchField";
     }
 
     @GetMapping(value = "/books/new")
     public String newBook() {
-        return "/books/newBook";
+        return "books/newBook";
     }
 
     // add new book to table books
@@ -57,11 +59,13 @@ public class Controller {
         book.setPrice(form.getPrice());
         book.setOwner(session.getAttribute("mail").toString());
         bookService.addBook(book);
+        List<Book> books = bookService.findBooks();
+        model.addAttribute("books", books);
         model.addAttribute("member", session.getAttribute("member"));
         return "books/searchField";
     }
 
-    //search books
+    //search books - main page
     @PostMapping(value = "/books/search")
     public String search(BookForm form, Model model, HttpServletRequest serv, RedirectAttributes redi) {
         HttpSession session = serv.getSession();
@@ -90,6 +94,8 @@ public class Controller {
             System.out.println("pass");
             session.setAttribute("member", member);
             session.setAttribute("mail", member.getMail());
+            List<Book> books = bookService.findBooks();
+            model.addAttribute("books", books);
             model.addAttribute("member", session.getAttribute("member"));
             return "books/searchField";
         }

@@ -15,8 +15,12 @@ public class JdbcBookRepository implements BookRepository {
         this.dataSource = dataSource;
     }
 
+    /**
+     * mainpage 접근 시 books 테이블 전체 기본 호출 5줄
+     * @return book 항목 list
+     */
     public List<Book> findAll() {
-        String sql = "select * from books where id not in (select bookid from orders);";
+        String sql = "select * from books b where not exists (select bookid from orders o where o.bookid=b.id) limit 5;";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -42,6 +46,11 @@ public class JdbcBookRepository implements BookRepository {
         }
     }
 
+    /**
+     * books 테이블에 book 추가
+     * @param book
+     * @return book
+     */
     public Book save(Book book) {
         String sql = "insert into books(name, publisher, price, owner) values(?, ?, ?, ?)";
         Connection conn = null;
@@ -70,8 +79,14 @@ public class JdbcBookRepository implements BookRepository {
 
     }
 
+    /**
+     * form 에서 검색 조건을 지정하고 sql 조립
+     * sql문 결과를 books 테이블에서 book list로 반환
+     * @param form
+     * @return books
+     */
     public List<Book> findCond(BookForm form) {
-        String sql = "select * from books where 1 ";
+        String sql = "select * from books b where 1 ";
         if(form.getName()!=null)
             sql = sql + " AND name like '%"+form.getName()+"%'";
         if(form.getPublisher()!=null)
@@ -81,7 +96,7 @@ public class JdbcBookRepository implements BookRepository {
         if(form.getOwner()!=null) {
             sql = sql +"AND owner like '"+form.getOwner()+"'";
         }
-        sql = sql+" and id not in (select bookid from orders)";
+        sql = sql+" and not exists (select bookid from orders o where b.id=o.bookid)";
 
         Connection conn = null;
         PreparedStatement pstmt = null;

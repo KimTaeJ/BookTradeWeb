@@ -10,12 +10,14 @@ public class MemberService {
 
     public MemberService(MemberRepository memberRepository) {this.memberRepository = memberRepository;}
 
+    //회원 등록
     public Long join(Member member) {
         validateDuplicateMember(member);
         memberRepository.save(member);
         return member.getId();
     }
 
+    //중복 아이디 차단
     private void validateDuplicateMember(Member member) {
         memberRepository.findByMail(member.getMail())
                 .ifPresent(m -> {
@@ -23,6 +25,7 @@ public class MemberService {
                 });
     }
 
+    //로그인 검증
     public Member findMember(MemberForm form) {
         Member resmem = memberRepository.find(form);
         System.out.println(resmem.getMail());

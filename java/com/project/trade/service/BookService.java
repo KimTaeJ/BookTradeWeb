@@ -14,12 +14,12 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    /**
-     * 전체 도서 목록 조회
-     */
+
+    //전체 도서 목록 조회
     public List<Book> findBooks() {
         return bookRepository.findAll();
     }
+
 
     public Long addBook(Book book) {
         bookRepository.save(book);

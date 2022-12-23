@@ -12,6 +12,11 @@ public class JdbcMemberRepository implements MemberRepository {
     private final DataSource dataSource;
     public JdbcMemberRepository(DataSource dataSource) {this.dataSource = dataSource;}
 
+    /**
+     * 회원가입 시 사용
+     * @param member
+     * @return member
+     */
     @Override
     public Member save(Member member) {
         String sql = "insert into members(name, mail, pass) values(?, ?, ?)";
@@ -46,6 +51,11 @@ public class JdbcMemberRepository implements MemberRepository {
         return Optional.empty();
     }
 
+    /**
+     * 로그인 시 ID, Password 검사
+     * @param form
+     * @return member
+     */
     @Override
     public Member find(MemberForm form) {
         String sql = "select * from members where mail like ? and pass like ?";

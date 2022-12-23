@@ -10,16 +10,18 @@
         #center {background-color: #BDBDBD; background-color: rgba(255, 255, 255, 0.5);
          border: 1px solid black; margin:3px; text-align: center; float: left; width: 99%;}
         #main {background-color: #BDBDBD; background-color: rgba(255, 255, 255, 0.5);
-        border: 1px solid black; margin:3px; padding: 3px; text-align: center; float: left; width: 65%; }
+        border: margin:3px; padding: 3px; text-align: center; float: left; width: 99%; }
         #side {background-color: #BDBDBD; background-color: rgba(255, 255, 255, 0.5);
         border: 1px solid black; margin:3px; padding: 3px; text-align: center; float:right; width: 30%}
         #sname {display: inline-block;}
-        #table {margin:5px; padding:5px; background-color: #BDBDBD;}
+        #table {background-color: #BDBDBD;}
+        input {text-align: center;}
+
 
     </style>
 </head>
 <body>
-<h1><strong>강원대학교 중고 도서 거래</strong></h1>
+<h1><strong>Book Trade</strong></h1>
 <div id="sname" th:text="${member.name}"></div>님 환영합니다!
 <button type="button" onclick="location.href='/member/out'">로그아웃</button>
 <button type="button" onclick="location.href='/member/myPage'">마이페이지</button>
@@ -42,7 +44,7 @@
         </form>
     </div>
     <div id="main">
-        <table id="table" border="1" width="98%" height="200" bordercolor="black">
+        <table id="table" border="1" bordercolor="black">
             <thead>
             <tr>
                 목록
@@ -57,15 +59,20 @@
                 <td>소유주</td>
             </tr>
             <tr th:each="book : ${books}">
-                <td th:text="${book.id}"></td>
-                <td th:text="${book.name}"></td>
-                <td th:text="${book.publisher}"></td>
-                <td th:text="${book.price}"></td>
-                <td th:text="${book.owner}"></td>
+                <form action="/books/order" method="post">
+                <div class="form-group">
+                <td><input type="text" th:value ="${book.id}" id="bookid" name="bookid" readonly></td>
+                <td><input type="text" th:value ="${book.name}" readonly></td>
+                <td><input type="text" th:value ="${book.publisher}" readonly></td>
+                <td><input type="text" th:value ="${book.price}" readonly></td>
+                <td><input type="text" th:value ="${book.owner}" readonly></td>
+                <td><button type="submit">주문</button></td></div>
+                </form>
             </tr>
             </tbody>
         </table>
     </div>
+    <!--
     <div id="side">
         <form action="/books/order" method="post">
             <p>주문서 작성</p>
@@ -77,6 +84,7 @@
             <button type="reset">취소</button>
         </form>
     </div>
+    -->
 </div>
 </body>
 </html>

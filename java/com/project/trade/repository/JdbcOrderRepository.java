@@ -14,6 +14,11 @@ public class JdbcOrderRepository implements OrderRepository{
         this.dataSource = dataSource;
     }
 
+    /**
+     * 주문 등록
+     * @param order
+     * @return order
+     */
     @Override
     public OrderForm save(OrderForm order) {
         String sql = "insert into orders(bookid, client) values(?, ?)";
@@ -41,6 +46,11 @@ public class JdbcOrderRepository implements OrderRepository{
         }
     }
 
+    /**
+     * 내 주문 확인용 orders 테이블에서 client 값이 sesion의 mail 값과 같은 항목 호출
+     * @param form
+     * @return orders
+     */
     @Override
     public List<Order> findByOwner(Order form) {
         String sql = "select o.orderid as orderid, b.name as bookname, b.owner as owner, o.client as client " +
@@ -73,6 +83,11 @@ public class JdbcOrderRepository implements OrderRepository{
         }
     }
 
+    /**
+     * 받은 주문 확인용 orders 테이블의 bookid가 session이 books 테이블에서 owner인 항목 호출
+     * @param form
+     * @return orders
+     */
     @Override
     public List<Order> findByClient(Order form) {
         String sql = "select o.orderid as orderid, b.name as bookname, b.owner as owner, o.client as client from orders o, books b where o.client like ? and o.bookid like b.id";
