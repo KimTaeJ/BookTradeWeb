@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <style>
+        body {background-image: url("../image/knu2.jpg"); background-size:cover; background-attachment:fixed;}
+        h1 {color:blue; font: 25pt "맑은 고딕"; text-align: center; mrgin: 3px;}
+        button {text-align: center; margin: 3px; padding: 3px; }
+        #center {border: 1px solid black; padding: 50px; margin: 50px; background-color: #BDBDBD; background-color: rgba(255, 255, 255, 0.5);}
+    </style>
+</head>
+<body>
+<h1><strong>Book Trade</strong></h1>
+<div class="container">
+    <div id="center">
+        <form action="/member/new" method="post">
+            <div class="form-group">
+                <label for="name">&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;름&nbsp;</label>
+                <input type="text" id="name" name="name" required>
+                <br>
+                <label for="mail">&nbsp;&nbsp;메&nbsp;&nbsp;&nbsp;일&nbsp;</label>
+                <input type="email" id="mail" name="mail"  required>
+                <br>
+                <label for="pass">비밀번호</label>
+                <input type="text" id="pass" name="pass" required>
+                <p>
+                    <button type="submit">등록</button>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
